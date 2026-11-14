@@ -446,6 +446,21 @@
             font-size: 15px;
             cursor: pointer;
         }
+        .btn-compartir-modal {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #fed7aa;
+            background-color: #fff7ed;
+            color: #ea580c;
+            font-weight: bold;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        .btn-compartir-modal:hover {
+            background-color: #ffedd5;
+        }
         .carrito-flotante {
             display: none;
             position: fixed;
@@ -467,6 +482,26 @@
             color: #fb923c;
             font-weight: bold;
             font-size: 16px;
+        }
+        .btn-whatsapp-flotante {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #25d366;
+            color: #ffffff;
+            padding: 12px 18px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+            z-index: 1500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-whatsapp-flotante:hover {
+            background-color: #1ebe5d;
         }
         .btn-volver-arriba {
             display: none;
@@ -501,7 +536,7 @@
 <body>
 
     <div class="barra-anuncios">
-        Medios de pago: <span>Efectivo - Transferencia - Mercado Pago</span> | Envios a cargo del comprador
+        Medios de pago: <span>Efectivo - Transferencia - Mercado Pago</span> &nbsp;|&nbsp; Envios a cargo del comprador
     </div>
 
     <div class="contenedor-principal">
@@ -561,7 +596,7 @@
                 </form>
 
                 <div id="mensaje-confirmacion" class="mensaje-exito">
-                    <strong>Pedido enviado con exito!</strong><br>
+                    <strong>Pedido enviado con exito.</strong><br>
                     Ya recibimos tu solicitud y nos pondremos en contacto a la brevedad.
                 </div>
             </div>
@@ -586,7 +621,7 @@
         </main>
 
         <footer>
-            <strong>Calejo Bazar</strong> - Consultas: Calejobazar3@gmail.com<br>
+            <strong>Calejo Bazar</strong> - Consultas: Calejobazar3@gmail.com - WhatsApp: 11 2743-3172<br>
             Medios de pago: Efectivo, Transferencia y Mercado Pago - Envios a cargo del comprador
         </footer>
     </div>
@@ -612,15 +647,21 @@
                     </div>
                     <button type="button" class="btn-agregar-modal" id="btn-confirmar-modal" onclick="confirmarAgregarDesdeModal()">Agregar $0 &gt;</button>
                 </div>
+
+                <button type="button" class="btn-compartir-modal" onclick="compartirProductoActual()">Compartir este producto</button>
             </div>
         </div>
     </div>
 
     <div class="carrito-flotante" id="barra-carrito-flotante" onclick="document.getElementById('bloque-carrito').scrollIntoView()">
-        <div>Carrito: <strong id="flotante-items">0</strong> prod.</div>
+        <div><strong id="flotante-items">0</strong> productos</div>
         <div>Total: <span id="flotante-total">$0</span></div>
         <div style="background:#ea580c; color:#fff; padding:5px 12px; border-radius:20px; font-weight:bold; font-size:12px;">Ver pedido</div>
     </div>
+
+    <a href="https://wa.me/5491127433172?text=Hola%20Calejo%20Bazar!%20Quisiera%20hacer%20una%20consulta." target="_blank" class="btn-whatsapp-flotante" title="Consultar por WhatsApp">
+        WhatsApp
+    </a>
 
     <button class="btn-volver-arriba" id="btn-subir" onclick="window.scrollTo(0,0)" title="Volver arriba">^</button>
 
@@ -712,6 +753,24 @@
             cerrarModalDetalle();
         }
 
+        function compartirProductoActual() {
+            if (!productoModalActual) return;
+            const skuTexto = productoModalActual.sku ? " (" + productoModalActual.sku + ")" : "";
+            const urlTienda = proto + "calejobazar-oficial.github.io/calejobazar/";
+            const textoCompartir = "Mira este producto de Calejo Bazar: *" + productoModalActual.nombre + "*" + skuTexto + " a " + productoModalActual.precioTexto + " -> " + urlTienda;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: productoModalActual.nombre,
+                    text: textoCompartir
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(textoCompartir).then(() => {
+                    alert("Enlace y detalle del producto copiados. Ya podes pegarlo en WhatsApp o donde quieras.");
+                });
+            }
+        }
+
         function dibujarProductos(listaProductos) {
             const contenedor = document.getElementById('contenedor-productos');
             const contador = document.getElementById('contador-productos');
@@ -752,7 +811,7 @@
         fetch(URL_EXCEL_CSV)
             .then(respuesta => respuesta.text())
             .then(texto => {
-                const filas = texto.split(String.fromCharCode(10)).slice(1);
+                const filas = texto.split('\n').slice(1);
                 const categoriasUnicas = new Set();
 
                 filas.forEach((fila, indice) => {
