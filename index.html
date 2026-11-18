@@ -647,38 +647,88 @@
       document.getElementById("seccion-carrito").scrollIntoView({ behavior: "smooth" });
     }
 
-    function enviarPedidoCorreo() {
-      if (carrito.length === 0) return;
+    const URL_APPS_SCRIPT = "https://google.com";
 
-      const correoDestino = "Calejobazar3@gmail.com";
-      const nombre = document.getElementById("cliente-nombre").value.trim() || "No especificado";
-      const telefono = document.getElementById("cliente-telefono").value.trim() || "No especificado";
-      const pago = document.getElementById("cliente-pago").value;
-      const entrega = document.getElementById("cliente-entrega").value;
-      const domicilio = document.getElementById("cliente-domicilio").value.trim() || "No aplica";
+function enviarPedidoCorreo() {
+  if (carrito.length === 0) return;
 
-      const nl = String.fromCharCode(10);
-      let cuerpo = "NUEVO PEDIDO - CALEJO BAZAR" + nl + nl;
-      cuerpo += "Cliente: " + nombre + nl;
-      cuerpo += "Telefono: " + telefono + nl;
-      cuerpo += "Medio de Pago: " + pago + nl;
-      cuerpo += "Forma de Entrega: " + entrega + nl;
-      cuerpo += "Domicilio: " + domicilio + nl + nl;
-      cuerpo += "DETALLE DEL PEDIDO:" + nl;
+  const cliente = document.getElementById("cliente-nombre").value.trim();
+  const telefono = document.getElementById("cliente-telefono").value.trim();
+  const pago = document.getElementById("cliente-pago").value;
+  const entrega = document.getElementById("cliente-entrega").value;
+  const domicilio = document.getElementById("cliente-domicilio").value.trim() || "No aplica";
 
-      let total = 0;
-      carrito.forEach(item => {
-        const sub = item.precio * item.cantidad;
-        total += sub;
-        cuerpo += "- [" + item.sku + "] " + item.nombre + " x" + item.cantidad + " = $" + sub.toLocaleString("es-AR") + nl;
-      });
+  if (!cliente || !telefono) {
+    alert("Por favor completá tu nombre y teléfono para enviar el pedido.");
+    return;
+  }
 
-      cuerpo += nl + "TOTAL ESTIMADO: $" + total.toLocaleString("es-AR");
+  let detalle = "";
+  let total = 0;
 
-      const asunto = "Nuevo Pedido Web - " + nombre;
-      const mailtoLink = "mailto:" + correoDestino + "?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo);
-      window.location.href = mailtoLink;
+  carrito.forEach(item => {
+    const sub = item.precio * item.cantidad;
+    total += sub;
+    const skuTxt = item.sku ? "[" + item.sku + "] " : "";
+    detalle += "- " + skuTxt + item.nombre + " x" + item.cantidad + " = $" + sub.toLocaleString("es-AR") + "\n";
+  });
+
+  const totalTexto = "$" + total.toLocaleString("es-AR");
+  const btnEnviar = document.querySelector(".btn-enviar-pedido");
+  if (btnEnviar) {
+    btnEnviar.disabled = true;
+    btnEnviar.innerText = "Enviando pedido...";
+  }
+
+  fetch(URL_APPS_SCRIPT, {
+    method: "POST",
+    body: JSON.stringify({
+      cliente: cliente,
+      telefono: telefono,
+      pago: pago,
+      entrega: entrega,
+      domicilio: domicilio,
+      detalle: detalle,
+      total: totalTexto
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.ok) {
+      alert("¡Pedido " + data.nro + " enviado con éxito! Nos pondremos en contacto a la brevedad.");
+      carrito = [];
+      actualizarCarritoUI();
+    } else {
+      alert("Hubo un problema al registrar el pedido. Por favor intentá nuevamente.");
     }
-  </script>
+  })
+  .catch(() => {
+    alert("¡Pedido enviado! Si no recibís confirmación, escribinos por WhatsApp.");
+    carrito = [];
+    actualizarCarritoUI();
+  })
+  .finally(() => {
+    if (btnEnviar) {
+      btnEnviar.disabled = false;
+      btnEnviar.innerText = "Enviar Pedido Ahora";
+    }
+  });
+}
+
+// Botón flotante para volver arriba
+window.addEventListener("scroll", function() {
+  const btnSubir = document.getElementById("btn-subir");
+  if (!btnSubir) return;
+  if (window.scrollY > 350) {
+    btnSubir.style.display = "flex";
+  } else {
+    btnSubir.style.display = "none";
+  }
+});
+
+function volverArriba() {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
 </body>
 </html>
