@@ -468,14 +468,24 @@
                               p.sku.toLowerCase().includes(texto);
         if (!coincideTexto) return false;
 
-        if (categoriaActiva === "Todas") return true;
-        if (categoriaActiva === "Utensilio Cocina") {
-          return p.categoria === "Utensilio Cocina" || p.categoria === "Especieros - Saleros";
+               const catFiltro = (categoriaActiva || "").toLowerCase().trim();
+        const catProd = (p.categoria || "").toLowerCase().trim();
+
+        if (catFiltro === "todas" || catFiltro === "todos") return true;
+        if (catFiltro.includes("cocina")) {
+            return catProd.includes("cocina") || catProd.includes("especiero");
         }
-        if (categoriaActiva === "Hogar") {
-          return p.categoria === "Hogar" || p.categoria === "Textil";
+        if (catFiltro.includes("hogar")) {
+            return catProd.includes("hogar") || catProd.includes("textil");
         }
-        return p.categoria === categoriaActiva;
+        if (catFiltro.includes("perfum")) {
+            return catProd.includes("perfum") || catProd.includes("crema");
+        }
+        if (catFiltro.includes("organiz")) {
+            return catProd.includes("organiz");
+        }
+        return catProd === catFiltro || catProd.includes(catFiltro);
+
       });
 
       if (orden === "menor") {
