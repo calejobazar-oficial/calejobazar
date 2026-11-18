@@ -136,7 +136,8 @@
       <div class="form-grid">
         <input type="text" id="cliente-nombre" placeholder="Tu Nombre y Apellido">
         <input type="text" id="cliente-telefono" placeholder="Tu Telefono / WhatsApp">
-        <select id="cliente-pago">
+                  <input type="email" id="cliente-email" placeholder="Tu Correo Electronico">
+<select id="cliente-pago">
           <option value="Efectivo">Pago en Efectivo</option>
           <option value="Transferencia Bancaria">Transferencia Bancaria</option>
           <option value="Mercado Pago">Mercado Pago</option>
@@ -664,6 +665,7 @@ function enviarPedidoCorreo() {
 
   const cliente = document.getElementById("cliente-nombre").value.trim();
   const telefono = document.getElementById("cliente-telefono").value.trim();
+  const email = document.getElementById("cliente-email").value.trim();
   const pago = document.getElementById("cliente-pago").value;
   const entrega = document.getElementById("cliente-entrega").value;
   const domicilio = document.getElementById("cliente-domicilio").value.trim() || "No aplica";
@@ -694,7 +696,7 @@ function enviarPedidoCorreo() {
     method: "POST",
     body: JSON.stringify({
       cliente: cliente,
-      telefono: telefono,
+      telefono: telefono,email: email,
       pago: pago,
       entrega: entrega,
       domicilio: domicilio,
