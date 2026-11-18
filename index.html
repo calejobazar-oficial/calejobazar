@@ -662,6 +662,11 @@ const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycby1ESRwWBq-t9O1
 
 function enviarPedidoCorreo() {
   if (carrito.length === 0) return;
+        const totalCompra = carrito.reduce((acum, item) => acum + (item.precio * item.cantidad), 0);
+        if (totalCompra < 50000) {
+            alert("La compra minima es de $50.000");
+            return;
+        }
 
   const cliente = document.getElementById("cliente-nombre").value.trim();
   const telefono = document.getElementById("cliente-telefono").value.trim();
