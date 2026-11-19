@@ -341,8 +341,8 @@
           const cols = filas[i];
           if (cols.length < 4) continue;
 
-          const sinStock = (cols[8] || "").toUpperCase();
-          if (sinStock === "SI" || sinStock === "X") continue;
+              const sinStock = (cols[8] || "").toUpperCase().trim();
+      if (sinStock === "NO" || sinStock === "SI" || sinStock === "X" || sinStock === "SIN STOCK") continue;
 
           const nombre = cols[2] || "Producto sin nombre";
           const precioTexto = cols[3] || "$0";
