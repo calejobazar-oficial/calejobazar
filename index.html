@@ -28,8 +28,18 @@
     .btn-vaciar { background: #fff0e6; color: #d9534f; border: 1px solid #f5c6cb; padding: 7px 14px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
     .btn-vaciar:hover { background: #ffe0e0; }
     .total-texto { font-size: 20px; font-weight: 800; color: #ff6b00; text-align: right; }
+    .ajuste-pago-nota { font-size: 12px; color: #28a745; font-weight: 600; text-align: right; margin-top: 2px; }
     .envio-nota { font-size: 11px; color: #888; text-align: right; margin-top: 2px; }
     .pagos-banner { background: #fff7f0; color: #b34700; text-align: center; font-size: 12px; padding: 7px; border-radius: 8px; margin-top: 12px; }
+
+    /* Barra de progreso mínimo de compra */
+    .minimo-wrap { margin-top: 12px; background: #fff8f2; border: 1px solid #f3dfd0; border-radius: 10px; padding: 10px 12px; }
+    .minimo-wrap.cumplido { background: #eefaf1; border-color: #b7e4c7; }
+    .minimo-texto { font-size: 12.5px; font-weight: 700; color: #d9534f; margin-bottom: 6px; text-align: center; }
+    .minimo-wrap.cumplido .minimo-texto { color: #218838; }
+    .progreso-track { width: 100%; height: 8px; background: #e9ecef; border-radius: 99px; overflow: hidden; }
+    .progreso-fill { height: 100%; width: 0%; background: #ff6b00; border-radius: 99px; transition: width 0.3s ease, background-color 0.3s ease; }
+    .minimo-wrap.cumplido .progreso-fill { background: #28a745; }
 
     .checkout-form { margin-top: 16px; padding-top: 14px; border-top: 1px dashed #e6d8cc; display: none; }
     .checkout-form h3 { font-size: 15px; color: #333; margin-bottom: 10px; text-align: center; }
@@ -62,15 +72,22 @@
     .tarjeta-producto { background: #fff; border-radius: 14px; padding: 12px; border: 1px solid #f0e6dd; box-shadow: 0 3px 10px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between; position: relative; transition: transform 0.2s; }
     .tarjeta-producto:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.08); }
     .sku-tag { position: absolute; top: 10px; left: 10px; background: #fff3e6; color: #ff6b00; font-size: 11px; font-weight: 700; padding: 3px 7px; border-radius: 6px; z-index: 2; }
+    
+    /* Etiquetas automáticas (OFERTA, NUEVO, ÚLTIMOS) */
+    .promo-tag { position: absolute; top: 10px; right: 10px; color: #fff; font-size: 10px; font-weight: 800; padding: 3px 8px; border-radius: 6px; z-index: 2; letter-spacing: 0.4px; text-transform: uppercase; box-shadow: 0 2px 6px rgba(0,0,0,0.15); }
+    .promo-oferta { background: #e53935; }
+    .promo-nuevo { background: #2e7d32; }
+    .promo-ultimos { background: #f57c00; }
+
     .img-wrap { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; overflow: hidden; border-radius: 10px; background: #fff; cursor: pointer; margin-bottom: 10px; }
     .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
     .tarjeta-producto h3 { font-size: 14px; color: #222; margin-bottom: 4px; line-height: 1.3; cursor: pointer; }
-    .tarjeta-producto p.desc { font-size: 12px; color: #777; margin-bottom: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2;  -webkit-box-orient: vertical; overflow: hidden; }
+    .tarjeta-producto p.desc { font-size: 12px; color: #777; margin-bottom: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .precio-card { font-size: 18px; font-weight: 800; color: #ff6b00; margin-bottom: 8px; }
     .btn-elegir { width: 100%; background: #ff6b00; color: #fff; border: none; padding: 9px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-elegir:hover { background: #e65100; }
 
-    /* Modal Producto (Imagen Grande + Compartir + Cantidades) */
+    /* Modal Producto */
     .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.65); z-index: 1000; align-items: center; justify-content: center; padding: 15px; }
     .modal-overlay.abierto { display: flex; }
     .modal-card { background: #fff; border-radius: 16px; max-width: 440px; width: 100%; padding: 20px; position: relative; text-align: center; max-height: 92vh; overflow-y: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
@@ -86,19 +103,31 @@
     .selector-cant span { font-size: 18px; font-weight: 700; min-width: 24px; }
     .btn-agregar-modal { width: 100%; background: #ff6b00; color: #fff; border: none; padding: 13px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
 
-    /* Barra Flotante Inferior y WhatsApp */
+    /* Preguntas Frecuentes (FAQ) */
+    .faq-section { max-width: 820px; margin: 36px auto 10px; padding: 0 15px; }
+    .faq-section h2 { text-align: center; color: #ff6b00; font-size: 20px; margin-bottom: 14px; }
+    .faq-item { background: #fff; border: 1px solid #f0e6dd; border-radius: 10px; margin-bottom: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.03); }
+    .faq-item summary { padding: 13px 16px; font-weight: 700; font-size: 14px; color: #333; cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "+"; font-size: 18px; color: #ff6b00; font-weight: 800; }
+    .faq-item[open] summary::after { content: "-"; }
+    .faq-item p { padding: 0 16px 14px; font-size: 13px; color: #666; line-height: 1.5; border-top: 1px solid #f7efe8; padding-top: 10px; }
+
+    /* Barra Flotante Inferior, WhatsApp y Subir Arriba */
     .barra-flotante { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid #e6d8cc; padding: 10px 18px; display: flex; justify-content: space-between; align-items: center; z-index: 900; box-shadow: 0 -3px 12px rgba(0,0,0,0.08); }
     .barra-info { font-size: 14px; color: #333; }
     .barra-info strong { color: #ff6b00; font-size: 16px; }
     .btn-ver-pedido { background: #ff6b00; color: #fff; border: none; padding: 10px 20px; border-radius: 25px; font-size: 14px; font-weight: 700; cursor: pointer; }
     .btn-whatsapp-float { position: fixed; bottom: 68px; left: 16px; background: #25d366; color: #fff; text-decoration: none; padding: 10px 16px; border-radius: 25px; font-size: 13px; font-weight: 700; box-shadow: 0 4px 12px rgba(37,211,102,0.35); z-index: 910; }
+    .btn-subir-float { display: none; position: fixed; bottom: 68px; right: 16px; width: 42px; height: 42px; border-radius: 50%; background: #ff6b00; color: #fff; border: none; font-size: 18px; font-weight: 800; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(255,107,0,0.35); z-index: 910; }
+    .btn-subir-float:hover { background: #e65100; }
 
-    footer { text-align: center; padding: 28px 15px 15px; font-size: 12px; color: #777; margin-top: 30px; border-top: 1px solid #eee; }
+    footer { text-align: center; padding: 28px 15px 15px; font-size: 12px; color: #777; margin-top: 25px; border-top: 1px solid #eee; }
   </style>
 </head>
 <body>
 
-  <div class="top-banner">
+  <div class="top-banner" id="top-banner-minimo">
     BIENVENIDOS A CALEJO BAZAR - MINIMO DE COMPRA $30.000 PESOS - ENVIOS A TODO EL PAIS (A CARGO DEL COMPRADOR)
   </div>
 
@@ -119,10 +148,18 @@
       <p style="text-align:center; color:#999; font-size:13px;">El carrito esta vacio.</p>
     </div>
 
+    <div class="minimo-wrap" id="minimo-wrap">
+      <div class="minimo-texto" id="minimo-texto">Te faltan $30.000 para alcanzar el mínimo de compra</div>
+      <div class="progreso-track">
+        <div class="progreso-fill" id="progreso-fill"></div>
+      </div>
+    </div>
+
     <div class="carrito-footer-row">
       <button type="button" class="btn-vaciar" id="btn-vaciar" onclick="vaciarCarrito()" style="display:none;">Vaciar carrito</button>
       <div style="margin-left:auto;">
         <div class="total-texto">Total: $<span id="monto-total">0</span></div>
+        <div class="ajuste-pago-nota" id="ajuste-pago-nota" style="display:none;"></div>
         <div class="envio-nota"><strong>*El envio es a cargo del comprador.</strong></div>
       </div>
     </div>
@@ -136,8 +173,8 @@
       <div class="form-grid">
         <input type="text" id="cliente-nombre" placeholder="Tu Nombre y Apellido">
         <input type="text" id="cliente-telefono" placeholder="Tu Telefono / WhatsApp">
-                  <input type="email" id="cliente-email" placeholder="Tu Correo Electronico">
-<select id="cliente-pago">
+        <input type="email" id="cliente-email" placeholder="Tu Correo Electronico">
+        <select id="cliente-pago" onchange="actualizarCarritoUI()">
           <option value="Efectivo">Pago en Efectivo</option>
           <option value="Transferencia Bancaria">Transferencia Bancaria</option>
           <option value="Mercado Pago">Mercado Pago</option>
@@ -214,7 +251,6 @@
       <span class="burbuja-texto">Hogar</span>
     </button>
 
-
     <button type="button" class="burbuja-cat" onclick="seleccionarBurbuja(this, 'Niños/as')">
       <div class="burbuja-icono">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
@@ -233,6 +269,26 @@
   <div class="contador-bar" id="contador-productos">Cargando catalogo de productos...</div>
 
   <main class="grilla-productos" id="contenedor-productos"></main>
+
+  <section class="faq-section">
+    <h2>Preguntas Frecuentes</h2>
+    <details class="faq-item">
+      <summary>¿Cuál es el monto mínimo de compra?</summary>
+      <p>El mínimo de compra mayorista en Calejo Bazar es de <strong>$30.000 pesos</strong>. Podés combinar artículos de distintas categorías libremente hasta alcanzar o superar ese monto.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cómo funcionan los envíos y quién los abona?</summary>
+      <p>Realizamos envíos a todo el país y también podés retirar tu pedido en nuestro local. El costo de envío corre a cargo del comprador y se coordina una vez confirmado el pedido.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Qué medios de pago aceptan?</summary>
+      <p>Aceptamos <strong>Efectivo</strong>, <strong>Transferencia Bancaria</strong> y <strong>Mercado Pago</strong>. Podés elegir tu medio preferido al completar los datos de tu carrito.</p>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cómo confirmo mi pedido?</summary>
+      <p>Agregá los productos al carrito, completá tu nombre, teléfono y modalidad de entrega, y presioná <strong>"Enviar Pedido Ahora"</strong>. El sistema registrará tu número de pedido al instante y nos comunicaremos con vos.</p>
+    </details>
+  </section>
 
   <div class="modal-overlay" id="modal-producto" onclick="cerrarModalFondo(event)">
     <div class="modal-card">
@@ -254,6 +310,7 @@
   </div>
 
   <a class="btn-whatsapp-float" href="https://wa.me/5491127433172" target="_blank">WhatsApp</a>
+  <button type="button" class="btn-subir-float" id="btn-subir" onclick="volverArriba()" title="Subir arriba">&#8593;</button>
 
   <div class="barra-flotante">
     <div class="barra-info">
@@ -269,7 +326,19 @@
 
   <script>
     const URL_EXCEL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5uh38kdfXIQI99v0WvPeoVSY9uJ6LTbsrP4H-mJhnHNHVFiqcqcrnZjyfChpw6w/pub?output=csv";
+    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycby1ESRwWBq-t9O1QcwQB8K45t37bD0frZsKN4OTEuCEXo3zPhbomIdaG15mVkGtyZNOww/exec";
     const IMG_PLACEHOLDER = "https://via.placeholder.com/300x300?text=Sin+Imagen";
+    const MONTO_MINIMO_COMPRA = 30000;
+
+    // Configuración centralizada de medios de pago (porcentaje: negativo = descuento, positivo = recargo)
+    const CONFIG_PAGOS = {
+      "Efectivo": 0,
+      "Transferencia Bancaria": 0,
+      "Mercado Pago": 0
+    };
+
+    const STORAGE_CARRITO_KEY = "calejo_bazar_carrito_v1";
+    const STORAGE_CLIENTE_KEY = "calejo_bazar_cliente_v1";
 
     let todosLosProductos = [];
     let carrito = [];
@@ -277,16 +346,68 @@
     let productoModalActual = null;
     let cantidadModalActual = 1;
 
+    // Cargar carrito y datos guardados al iniciar
+    function cargarPersistencia() {
+      try {
+        const guardado = localStorage.getItem(STORAGE_CARRITO_KEY);
+        if (guardado) {
+          const parsed = JSON.parse(guardado);
+          if (Array.isArray(parsed)) carrito = parsed;
+        }
+        const datosCliente = JSON.parse(localStorage.getItem(STORAGE_CLIENTE_KEY) || "{}");
+        if (datosCliente.nombre) document.getElementById("cliente-nombre").value = datosCliente.nombre;
+        if (datosCliente.telefono) document.getElementById("cliente-telefono").value = datosCliente.telefono;
+        if (datosCliente.email) document.getElementById("cliente-email").value = datosCliente.email;
+        if (datosCliente.pago) document.getElementById("cliente-pago").value = datosCliente.pago;
+        if (datosCliente.entrega) document.getElementById("cliente-entrega").value = datosCliente.entrega;
+        if (datosCliente.domicilio) document.getElementById("cliente-domicilio").value = datosCliente.domicilio;
+      } catch (e) {}
+    }
+
+    function guardarPersistenciaCarrito() {
+      try {
+        localStorage.setItem(STORAGE_CARRITO_KEY, JSON.stringify(carrito));
+      } catch (e) {}
+    }
+
+    function guardarPersistenciaCliente() {
+      try {
+        const datos = {
+          nombre: document.getElementById("cliente-nombre")?.value || "",
+          telefono: document.getElementById("cliente-telefono")?.value || "",
+          email: document.getElementById("cliente-email")?.value || "",
+          pago: document.getElementById("cliente-pago")?.value || "Efectivo",
+          entrega: document.getElementById("cliente-entrega")?.value || "Retiro en Local",
+          domicilio: document.getElementById("cliente-domicilio")?.value || ""
+        };
+        localStorage.setItem(STORAGE_CLIENTE_KEY, JSON.stringify(datos));
+      } catch (e) {}
+    }
+
+    ["cliente-nombre", "cliente-telefono", "cliente-email", "cliente-pago", "cliente-entrega", "cliente-domicilio"].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener("input", guardarPersistenciaCliente);
+        el.addEventListener("change", guardarPersistenciaCliente);
+      }
+    });
+
     function limpiarNumeroPrecio(texto) {
       if (!texto) return 0;
       let soloNumeros = "";
       for (let i = 0; i < texto.length; i++) {
         const c = texto[i];
-        if (c >= "0" && c <= "9") {
-          soloNumeros += c;
-        }
+        if (c >= "0" && c <= "9") soloNumeros += c;
       }
       return parseInt(soloNumeros, 10) || 0;
+    }
+
+    function detectarEtiquetaPromo(nombre, descripcion) {
+      const txt = (nombre + " " + descripcion).toUpperCase();
+      if (txt.includes("OFERTA")) return { texto: "OFERTA", clase: "promo-oferta" };
+      if (txt.includes("NUEVO") || txt.includes("NUEVA")) return { texto: "NUEVO", clase: "promo-nuevo" };
+      if (txt.includes("ULTIMO") || txt.includes("ÚLTIMO")) return { texto: "ÚLTIMOS", clase: "promo-ultimos" };
+      return null;
     }
 
     function parsearCSVCompleto(texto) {
@@ -310,13 +431,9 @@
           filaActual.push(celdaActual.trim());
           celdaActual = "";
         } else if ((char === String.fromCharCode(10) || char === String.fromCharCode(13)) && !enComillas) {
-          if (char === String.fromCharCode(13) && sig === String.fromCharCode(10)) {
-            i++;
-          }
+          if (char === String.fromCharCode(13) && sig === String.fromCharCode(10)) i++;
           filaActual.push(celdaActual.trim());
-          if (filaActual.length > 1 || filaActual[0] !== "") {
-            filas.push(filaActual);
-          }
+          if (filaActual.length > 1 || filaActual[0] !== "") filas.push(filaActual);
           filaActual = [];
           celdaActual = "";
         } else {
@@ -341,8 +458,8 @@
           const cols = filas[i];
           if (cols.length < 4) continue;
 
-              const sinStock = (cols[8] || "").toUpperCase().trim();
-      if (sinStock === "NO" || sinStock === "SI" || sinStock === "X" || sinStock === "SIN STOCK") continue;
+          const sinStock = (cols[8] || "").toUpperCase().trim();
+          if (sinStock === "NO" || sinStock === "SI" || sinStock === "X" || sinStock === "SIN STOCK") continue;
 
           const nombre = cols[2] || "Producto sin nombre";
           const precioTexto = cols[3] || "$0";
@@ -376,7 +493,7 @@
 
         aplicarFiltros();
       })
-      .catch(err => {
+      .catch(() => {
         document.getElementById("contador-productos").textContent = "Error al cargar el catalogo. Intenta recargar la pagina.";
       });
 
@@ -393,6 +510,15 @@
         const badge = document.createElement("span");
         badge.className = "sku-tag";
         badge.textContent = prod.sku;
+        card.appendChild(badge);
+
+        const promo = detectarEtiquetaPromo(prod.nombre, prod.descripcion);
+        if (promo) {
+          const promoBadge = document.createElement("span");
+          promoBadge.className = "promo-tag " + promo.clase;
+          promoBadge.textContent = promo.texto;
+          card.appendChild(promoBadge);
+        }
 
         const imgBox = document.createElement("div");
         imgBox.className = "img-wrap";
@@ -423,7 +549,6 @@
         btn.textContent = "Elegir cantidad";
         btn.onclick = function() { abrirModalProducto(prod); };
 
-        card.appendChild(badge);
         card.appendChild(imgBox);
         card.appendChild(titulo);
         card.appendChild(desc);
@@ -440,9 +565,7 @@
       categoriaActiva = cat;
 
       const selectCat = document.getElementById("filtro-categoria");
-      if (selectCat) {
-        selectCat.value = cat;
-      }
+      if (selectCat) selectCat.value = cat;
       aplicarFiltros();
     }
 
@@ -463,24 +586,15 @@
                               p.sku.toLowerCase().includes(texto);
         if (!coincideTexto) return false;
 
-               const catFiltro = (categoriaActiva || "").toLowerCase().trim();
+        const catFiltro = (categoriaActiva || "").toLowerCase().trim();
         const catProd = (p.categoria || "").toLowerCase().trim();
 
         if (catFiltro === "todas" || catFiltro === "todos") return true;
-        if (catFiltro.includes("cocina")) {
-            return catProd.includes("cocina") || catProd.includes("especiero");
-        }
-        if (catFiltro.includes("hogar")) {
-            return catProd.includes("hogar") || catProd.includes("textil");
-        }
-        if (catFiltro.includes("perfum")) {
-            return catProd.includes("perfum") || catProd.includes("crema");
-        }
-        if (catFiltro.includes("organiz")) {
-            return catProd.includes("organiz");
-        }
+        if (catFiltro.includes("cocina")) return catProd.includes("cocina") || catProd.includes("especiero");
+        if (catFiltro.includes("hogar")) return catProd.includes("hogar") || catProd.includes("textil");
+        if (catFiltro.includes("perfum")) return catProd.includes("perfum") || catProd.includes("crema");
+        if (catFiltro.includes("organiz")) return catProd.includes("organiz");
         return catProd === catFiltro || catProd.includes(catFiltro);
-
       });
 
       if (orden === "menor") {
@@ -512,9 +626,7 @@
     }
 
     function cerrarModalFondo(e) {
-      if (e.target.id === "modal-producto") {
-        cerrarModal();
-      }
+      if (e.target.id === "modal-producto") cerrarModal();
     }
 
     function abrirImagenCompleta() {
@@ -567,9 +679,7 @@
       const idx = carrito.findIndex(i => i.id === id);
       if (idx === -1) return;
       carrito[idx].cantidad += delta;
-      if (carrito[idx].cantidad <= 0) {
-        carrito.splice(idx, 1);
-      }
+      if (carrito[idx].cantidad <= 0) carrito.splice(idx, 1);
       actualizarCarritoUI();
     }
 
@@ -578,28 +688,54 @@
       actualizarCarritoUI();
     }
 
+    function actualizarBarraMinimo(subtotalBase) {
+      const wrap = document.getElementById("minimo-wrap");
+      const texto = document.getElementById("minimo-texto");
+      const fill = document.getElementById("progreso-fill");
+      const banner = document.getElementById("top-banner-minimo");
+      if (!wrap || !texto || !fill) return;
+
+      const porcentaje = Math.min(100, Math.round((subtotalBase / MONTO_MINIMO_COMPRA) * 100));
+      fill.style.width = porcentaje + "%";
+
+      if (subtotalBase >= MONTO_MINIMO_COMPRA) {
+        wrap.classList.add("cumplido");
+        texto.textContent = "¡Genial! Ya alcanzaste el mínimo de compra de $30.000";
+        if (banner) banner.textContent = "¡MINIMO DE COMPRA ALCANZADO ($30.000)! YA PODES ENVIAR TU PEDIDO";
+      } else {
+        wrap.classList.remove("cumplido");
+        const faltante = MONTO_MINIMO_COMPRA - subtotalBase;
+        texto.textContent = "Te faltan $" + faltante.toLocaleString("es-AR") + " para alcanzar el mínimo de compra ($30.000)";
+        if (banner) banner.textContent = "BIENVENIDOS A CALEJO BAZAR - MINIMO DE COMPRA $30.000 PESOS - ENVIOS A TODO EL PAIS (A CARGO DEL COMPRADOR)";
+      }
+    }
+
     function actualizarCarritoUI() {
+      guardarPersistenciaCarrito();
       const lista = document.getElementById("lista-carrito");
       const btnVaciar = document.getElementById("btn-vaciar");
       const checkout = document.getElementById("bloque-checkout");
+      const notaAjuste = document.getElementById("ajuste-pago-nota");
 
       if (carrito.length === 0) {
         lista.innerHTML = '<p style="text-align:center; color:#999; font-size:13px;">El carrito esta vacio.</p>';
         document.getElementById("monto-total").textContent = "0";
         document.getElementById("float-cantidad").textContent = "0";
         document.getElementById("float-total").textContent = "$0";
+        if (notaAjuste) notaAjuste.style.display = "none";
         btnVaciar.style.display = "none";
         checkout.style.display = "none";
+        actualizarBarraMinimo(0);
         return;
       }
 
       lista.innerHTML = "";
-      let totalMonto = 0;
+      let subtotalBase = 0;
       let totalUnidades = 0;
 
       carrito.forEach(item => {
         const sub = item.precio * item.cantidad;
-        totalMonto += sub;
+        subtotalBase += sub;
         totalUnidades += item.cantidad;
 
         const row = document.createElement("div");
@@ -641,105 +777,132 @@
         lista.appendChild(row);
       });
 
-      document.getElementById("monto-total").textContent = totalMonto.toLocaleString("es-AR");
+      const medioPago = document.getElementById("cliente-pago")?.value || "Efectivo";
+      const pctAjuste = CONFIG_PAGOS[medioPago] || 0;
+      const montoAjuste = Math.round(subtotalBase * (pctAjuste / 100));
+      const totalFinal = subtotalBase + montoAjuste;
+
+      if (notaAjuste) {
+        if (pctAjuste < 0) {
+          notaAjuste.style.display = "block";
+          notaAjuste.style.color = "#28a745";
+          notaAjuste.textContent = "Descuento aplicado (" + pctAjuste + "% por " + medioPago + "): -$" + Math.abs(montoAjuste).toLocaleString("es-AR");
+        } else if (pctAjuste > 0) {
+          notaAjuste.style.display = "block";
+          notaAjuste.style.color = "#d9534f";
+          notaAjuste.textContent = "Recargo aplicado (+" + pctAjuste + "% por " + medioPago + "): +$" + montoAjuste.toLocaleString("es-AR");
+        } else {
+          notaAjuste.style.display = "none";
+        }
+      }
+
+      document.getElementById("monto-total").textContent = totalFinal.toLocaleString("es-AR");
       document.getElementById("float-cantidad").textContent = totalUnidades;
-      document.getElementById("float-total").textContent = "$" + totalMonto.toLocaleString("es-AR");
+      document.getElementById("float-total").textContent = "$" + totalFinal.toLocaleString("es-AR");
       btnVaciar.style.display = "inline-block";
       checkout.style.display = "block";
+
+      actualizarBarraMinimo(subtotalBase);
     }
 
     function irAlCarrito() {
       document.getElementById("seccion-carrito").scrollIntoView({ behavior: "smooth" });
     }
 
-const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycby1ESRwWBq-t9O1QcwQB8K45t37bD0frZsKN4OTEuCEXo3zPhbomIdaG15mVkGtyZNOww/exec";
+    function enviarPedidoCorreo() {
+      if (carrito.length === 0) return;
 
-function enviarPedidoCorreo() {
-  if (carrito.length === 0) return;
-        const totalCompra = carrito.reduce((acum, item) => acum + (item.precio * item.cantidad), 0);
-        if (totalCompra < 30000) {
-            alert("La compra minima es de $30.000");
-            return;
+      const subtotalBase = carrito.reduce((acum, item) => acum + (item.precio * item.cantidad), 0);
+      if (subtotalBase < MONTO_MINIMO_COMPRA) {
+        const faltante = MONTO_MINIMO_COMPRA - subtotalBase;
+        alert("La compra mínima es de $30.000. Te faltan $" + faltante.toLocaleString("es-AR") + ".");
+        return;
+      }
+
+      const cliente = document.getElementById("cliente-nombre").value.trim();
+      const telefono = document.getElementById("cliente-telefono").value.trim();
+      const email = document.getElementById("cliente-email").value.trim();
+      const pago = document.getElementById("cliente-pago").value;
+      const entrega = document.getElementById("cliente-entrega").value;
+      const domicilio = document.getElementById("cliente-domicilio").value.trim() || "No aplica";
+
+      if (!cliente || !telefono) {
+        alert("Por favor completá tu nombre y teléfono para enviar el pedido.");
+        return;
+      }
+
+      let detalle = "";
+      carrito.forEach(item => {
+        const sub = item.precio * item.cantidad;
+        const skuTxt = item.sku ? "[" + item.sku + "] " : "";
+        detalle += "- " + skuTxt + item.nombre + " x" + item.cantidad + " = $" + sub.toLocaleString("es-AR") + "";
+      });
+
+      const pctAjuste = CONFIG_PAGOS[pago] || 0;
+      const montoAjuste = Math.round(subtotalBase * (pctAjuste / 100));
+      const totalFinal = subtotalBase + montoAjuste;
+      const totalTexto = "$" + totalFinal.toLocaleString("es-AR");
+
+      const btnEnviar = document.querySelector(".btn-enviar-pedido");
+      if (btnEnviar) {
+        btnEnviar.disabled = true;
+        btnEnviar.innerText = "Enviando pedido...";
+      }
+
+      fetch(URL_APPS_SCRIPT, {
+        method: "POST",
+        body: JSON.stringify({
+          cliente: cliente,
+          telefono: telefono,
+          email: email,
+          pago: pago,
+          entrega: entrega,
+          domicilio: domicilio,
+          detalle: detalle,
+          total: totalTexto
+        })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.ok) {
+          alert("¡Pedido " + data.nro + " enviado con éxito! Nos pondremos en contacto a la brevedad.");
+          carrito = [];
+          actualizarCarritoUI();
+        } else {
+          alert("Hubo un problema al registrar el pedido. Por favor intentá nuevamente.");
         }
-
-  const cliente = document.getElementById("cliente-nombre").value.trim();
-  const telefono = document.getElementById("cliente-telefono").value.trim();
-  const email = document.getElementById("cliente-email").value.trim();
-  const pago = document.getElementById("cliente-pago").value;
-  const entrega = document.getElementById("cliente-entrega").value;
-  const domicilio = document.getElementById("cliente-domicilio").value.trim() || "No aplica";
-
-  if (!cliente || !telefono) {
-    alert("Por favor completá tu nombre y teléfono para enviar el pedido.");
-    return;
-  }
-
-  let detalle = "";
-  let total = 0;
-
-  carrito.forEach(item => {
-    const sub = item.precio * item.cantidad;
-    total += sub;
-    const skuTxt = item.sku ? "[" + item.sku + "] " : "";
-    detalle += "- " + skuTxt + item.nombre + " x" + item.cantidad + " = $" + sub.toLocaleString("es-AR") + "\n";
-  });
-
-  const totalTexto = "$" + total.toLocaleString("es-AR");
-  const btnEnviar = document.querySelector(".btn-enviar-pedido");
-  if (btnEnviar) {
-    btnEnviar.disabled = true;
-    btnEnviar.innerText = "Enviando pedido...";
-  }
-
-  fetch(URL_APPS_SCRIPT, {
-    method: "POST",
-    body: JSON.stringify({
-      cliente: cliente,
-      telefono: telefono,email: email,
-      pago: pago,
-      entrega: entrega,
-      domicilio: domicilio,
-      detalle: detalle,
-      total: totalTexto
-    })
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.ok) {
-      alert("¡Pedido " + data.nro + " enviado con éxito! Nos pondremos en contacto a la brevedad.");
-      carrito = [];
-      actualizarCarritoUI();
-    } else {
-      alert("Hubo un problema al registrar el pedido. Por favor intentá nuevamente.");
+      })
+      .catch(() => {
+        alert("¡Pedido enviado! Si no recibís confirmación, escribinos por WhatsApp.");
+        carrito = [];
+        actualizarCarritoUI();
+      })
+      .finally(() => {
+        if (btnEnviar) {
+          btnEnviar.disabled = false;
+          btnEnviar.innerText = "Enviar Pedido Ahora";
+        }
+      });
     }
-  })
-  .catch(() => {
-    alert("¡Pedido enviado! Si no recibís confirmación, escribinos por WhatsApp.");
-    carrito = [];
+
+    // Botón flotante para volver arriba
+    window.addEventListener("scroll", function() {
+      const btnSubir = document.getElementById("btn-subir");
+      if (!btnSubir) return;
+      if (window.scrollY > 350) {
+        btnSubir.style.display = "flex";
+      } else {
+        btnSubir.style.display = "none";
+      }
+    });
+
+    function volverArriba() {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Inicializar estado guardado al cargar la página
+    cargarPersistencia();
     actualizarCarritoUI();
-  })
-  .finally(() => {
-    if (btnEnviar) {
-      btnEnviar.disabled = false;
-      btnEnviar.innerText = "Enviar Pedido Ahora";
-    }
-  });
-}
-
-// Botón flotante para volver arriba
-window.addEventListener("scroll", function() {
-  const btnSubir = document.getElementById("btn-subir");
-  if (!btnSubir) return;
-  if (window.scrollY > 350) {
-    btnSubir.style.display = "flex";
-  } else {
-    btnSubir.style.display = "none";
-  }
-});
-
-function volverArriba() {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-}
-</script>
+  </script>
 </body>
 </html>
