@@ -118,9 +118,12 @@
 
     #lista-carrito { min-height: 30px; }
     .item-carrito { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f3ece6; font-size: 13.5px; gap: 10px; }
+    .item-info-wrap { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .item-stock-aviso { font-size: 11px; color: #e65100; font-weight: 600; }
     .item-controles { display: flex; align-items: center; gap: 6px; }
     .btn-mini { width: 26px; height: 26px; border: 1px solid #ddd; background: #f9f9f9; border-radius: 6px; cursor: pointer; font-weight: bold; }
-    .btn-mini:hover { background: #eee; }
+    .btn-mini:hover:not(:disabled) { background: #eee; }
+    .btn-mini:disabled { opacity: 0.4; cursor: not-allowed; }
     .carrito-footer-row { display: flex; justify-content: space-between; align-items: center; margin-top: 14px; flex-wrap: wrap; gap: 10px; }
     .btn-vaciar { background: #fff0e6; color: #d9534f; border: 1px solid #f5c6cb; padding: 7px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 600; cursor: pointer; }
     .btn-vaciar:hover { background: #ffe0e0; }
@@ -157,23 +160,95 @@
       border-color: #ff6b00;
       box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.12);
     }
-    .campo-grupo input.input-invalido {
-      border-color: #dc3545 !important;
-      background-color: #fff8f8;
-    }
-    .campo-grupo input.input-valido {
-      border-color: #28a745 !important;
-    }
-    .error-msg {
-      color: #dc3545;
-      font-size: 11.5px;
-      font-weight: 600;
-      display: none;
-    }
+    .campo-grupo input.input-invalido { border-color: #dc3545 !important; background-color: #fff8f8; }
+    .campo-grupo input.input-valido { border-color: #28a745 !important; }
+    .error-msg { color: #dc3545; font-size: 11.5px; font-weight: 600; display: none; }
     .error-msg.visible { display: block; }
 
     .btn-enviar-pedido { width: 100%; margin-top: 14px; background: #28a745; color: #fff; border: none; padding: 13px; border-radius: 10px; font-size: 15px; font-weight: 700; cursor: pointer; }
     .btn-enviar-pedido:hover { background: #218838; }
+
+    /* Comprobante de Pedido Confirmado */
+    .comprobante-box {
+      display: none;
+      background: #f4fbf6;
+      border: 1px solid #b7e4c7;
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .comprobante-check {
+      width: 48px;
+      height: 48px;
+      background: #28a745;
+      color: #fff;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+    .comprobante-box h3 { color: #1b6e32; font-size: 18px; margin-bottom: 4px; }
+    .comprobante-nro { display: inline-block; background: #fff; border: 1px dashed #28a745; color: #1b6e32; font-weight: 800; font-size: 14px; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px; }
+    .comprobante-detalle {
+      background: #fff;
+      border: 1px solid #e2efe6;
+      border-radius: 10px;
+      padding: 12px;
+      text-align: left;
+      font-size: 12.5px;
+      color: #333;
+      white-space: pre-line;
+      line-height: 1.45;
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 14px;
+    }
+    .btn-wsp-comprobante {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      background: #25d366;
+      color: #fff;
+      text-decoration: none;
+      border: none;
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 14.5px;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 8px;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
+    }
+    .btn-wsp-comprobante:hover { background: #1ebe5d; }
+    .btn-copiar-comprobante {
+      width: 100%;
+      background: #fff;
+      color: #333;
+      border: 1px solid #ccc;
+      padding: 10px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 8px;
+    }
+    .btn-copiar-comprobante:hover { background: #f5f5f5; }
+    .btn-nuevo-pedido {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #ff6b00;
+      font-size: 13px;
+      font-weight: 700;
+      padding: 8px;
+      cursor: pointer;
+      text-decoration: underline;
+    }
 
     /* Controles de Búsqueda y Catálogo */
     .controles-busqueda { max-width: 1150px; margin: 10px auto 10px; padding: 0 15px; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 12px; }
@@ -182,7 +257,7 @@
     
     .categorias-rapidas { display: flex; gap: 14px; overflow-x: auto; padding: 12px 15px; margin: 8px auto 15px; max-width: 1150px; justify-content: flex-start; scrollbar-width: none; }
     .categorias-rapidas::-webkit-scrollbar { display: none; }
-    @media (min-width: 920px) { .categorias-rapidas { justify-content: center; flex-wrap: wrap; } }
+    @media (min-width: 980px) { .categorias-rapidas { justify-content: center; flex-wrap: wrap; } }
     .burbuja-cat { display: flex; flex-direction: column; align-items: center; min-width: 78px; cursor: pointer; background: none; border: none; padding: 0; transition: transform 0.2s ease; }
     .burbuja-cat:hover { transform: translateY(-3px); }
     .burbuja-icono { width: 58px; height: 58px; border-radius: 50%; background-color: #ffffff; border: 2px solid #f0e6dd; display: flex; align-items: center; justify-content: center; box-shadow: 0 3px 8px rgba(0,0,0,0.06); transition: all 0.2s ease; }
@@ -191,6 +266,10 @@
     .burbuja-cat.activa .burbuja-icono svg { stroke: #ffffff; }
     .burbuja-texto { margin-top: 7px; font-size: 12px; font-weight: 600; color: #444; text-align: center; }
     .burbuja-cat.activa .burbuja-texto { color: #ff6b00; }
+    .burbuja-ofertas .burbuja-icono { border-color: #ffcdd2; background-color: #fff8f8; }
+    .burbuja-ofertas .burbuja-icono svg { stroke: #e53935; }
+    .burbuja-ofertas.activa .burbuja-icono { background-color: #e53935; border-color: #e53935; }
+    .burbuja-ofertas.activa .burbuja-texto { color: #e53935; }
 
     .contador-bar { max-width: 1150px; margin: 0 auto 12px; padding: 0 18px; text-align: right; font-size: 13px; color: #777; }
     .grilla-productos { max-width: 1150px; margin: 0 auto; padding: 0 15px; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 16px; }
@@ -208,6 +287,7 @@
     .img-wrap img { max-width: 100%; max-height: 100%; object-fit: contain; }
     .tarjeta-producto h3 { font-size: 14px; color: #222; margin-bottom: 4px; line-height: 1.3; cursor: pointer; }
     .tarjeta-producto p.desc { font-size: 12px; color: #777; margin-bottom: 8px; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .stock-card-badge { font-size: 11px; font-weight: 700; color: #d9534f; margin-bottom: 4px; }
     .precio-card { font-size: 18px; font-weight: 800; color: #ff6b00; margin-bottom: 8px; }
     .btn-elegir { width: 100%; background: #ff6b00; color: #fff; border: none; padding: 9px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; }
     .btn-elegir:hover { background: #e65100; }
@@ -222,11 +302,14 @@
     .btn-compartir { display: inline-flex; align-items: center; justify-content: center; gap: 6px; background: #f0f7ff; color: #0066cc; border: 1px solid #cce0ff; padding: 7px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; cursor: pointer; margin-bottom: 12px; }
     .modal-titulo { font-size: 18px; font-weight: 700; color: #222; margin-bottom: 6px; }
     .modal-desc { font-size: 13px; color: #666; margin-bottom: 10px; }
+    .modal-stock-info { font-size: 12.5px; font-weight: 700; color: #e65100; margin-bottom: 8px; }
     .modal-precio-unit { font-size: 20px; font-weight: 800; color: #ff6b00; margin-bottom: 14px; }
     .selector-cant { display: inline-flex; align-items: center; gap: 16px; background: #fbf7f4; padding: 8px 18px; border-radius: 30px; border: 1px solid #e6d8cc; margin-bottom: 16px; }
     .selector-cant button { width: 32px; height: 32px; border-radius: 50%; border: none; background: #ff6b00; color: #fff; font-size: 18px; font-weight: bold; cursor: pointer; }
+    .selector-cant button:disabled { background: #ccc; cursor: not-allowed; }
     .selector-cant span { font-size: 18px; font-weight: 700; min-width: 24px; }
     .btn-agregar-modal { width: 100%; background: #ff6b00; color: #fff; border: none; padding: 13px; border-radius: 10px; font-size: 16px; font-weight: 700; cursor: pointer; }
+    .btn-agregar-modal:disabled { background: #aaa; cursor: not-allowed; }
 
     /* Preguntas Frecuentes (FAQ) */
     .faq-section { max-width: 820px; margin: 36px auto 10px; padding: 0 15px; }
@@ -280,66 +363,86 @@
       <button type="button" class="btn-cerrar-drawer" onclick="cerrarDrawerCarrito()" title="Cerrar carrito">&times;</button>
     </div>
     <div class="drawer-body">
-      <div id="lista-carrito">
-        <p style="text-align:center; color:#999; font-size:13px;">El carrito esta vacio.</p>
+      <!-- Vista de Comprobante post-envío -->
+      <div class="comprobante-box" id="bloque-comprobante">
+        <div class="comprobante-check">&#10003;</div>
+        <h3>¡Pedido Confirmado!</h3>
+        <div class="comprobante-nro" id="comp-nro">Pedido registrado</div>
+        <div class="comprobante-detalle" id="comp-texto"></div>
+        <a id="btn-wsp-comprobante" class="btn-wsp-comprobante" href="#" target="_blank">
+          Enviar comprobante por WhatsApp
+        </a>
+        <button type="button" class="btn-copiar-comprobante" id="btn-copiar-comprobante" onclick="copiarResumenPedido()">
+          Copiar resumen del pedido
+        </button>
+        <button type="button" class="btn-nuevo-pedido" onclick="cerrarComprobanteYSeguir()">
+          Volver al catálogo y armar otro pedido
+        </button>
       </div>
-      <div class="minimo-wrap" id="minimo-wrap">
-        <div class="minimo-texto" id="minimo-texto">Te faltan $30.000 para alcanzar el mínimo de compra</div>
-        <div class="progreso-track">
-          <div class="progreso-fill" id="progreso-fill"></div>
+
+      <!-- Vista normal del carrito -->
+      <div id="vista-carrito-normal">
+        <div id="lista-carrito">
+          <p style="text-align:center; color:#999; font-size:13px;">El carrito esta vacio.</p>
         </div>
-      </div>
-      <div class="carrito-footer-row">
-        <button type="button" class="btn-vaciar" id="btn-vaciar" onclick="vaciarCarrito()" style="display:none;">Vaciar carrito</button>
-        <div style="margin-left:auto;">
-          <div class="total-texto">Total: $<span id="monto-total">0</span></div>
-          <div class="ajuste-pago-nota" id="ajuste-pago-nota" style="display:none;"></div>
-          <div class="envio-nota"><strong>*El envio es a cargo del comprador.</strong></div>
-        </div>
-      </div>
-      <div class="pagos-banner">
-        Medios de pago aceptados: <strong>Efectivo - Transferencia - Mercado Pago</strong>
-      </div>
-      <div class="checkout-form" id="bloque-checkout">
-        <h3>Completa tus datos para enviar el pedido</h3>
-        <div class="form-stack">
-          <div class="campo-grupo">
-            <label for="cliente-nombre">Nombre y Apellido *</label>
-            <input type="text" id="cliente-nombre" placeholder="Ej: Juan Pérez" oninput="validarNombreTiempoReal()">
-            <span class="error-msg" id="error-nombre">Ingresá tu nombre y apellido.</span>
-          </div>
-          <div class="campo-grupo">
-            <label for="cliente-telefono">Teléfono / WhatsApp (10 dígitos sin 0 ni 15) *</label>
-            <input type="tel" id="cliente-telefono" maxlength="10" inputmode="numeric" placeholder="Ej: 1127433172" oninput="filtrarYValidarTelefono()">
-            <span class="error-msg" id="error-telefono">El teléfono debe tener exactamente 10 números (ej: 1127433172).</span>
-          </div>
-          <div class="campo-grupo">
-            <label for="cliente-email">Correo Electrónico *</label>
-            <input type="email" id="cliente-email" placeholder="Ej: cliente@gmail.com" oninput="validarEmailTiempoReal()">
-            <span class="error-msg" id="error-email">Ingresá un correo válido (debe incluir @ y un punto, ej: nombre@gmail.com).</span>
-          </div>
-          <div class="campo-grupo">
-            <label for="cliente-pago">Medio de Pago</label>
-            <select id="cliente-pago" onchange="actualizarCarritoUI()">
-              <option value="Efectivo">Pago en Efectivo</option>
-              <option value="Transferencia Bancaria">Transferencia Bancaria</option>
-              <option value="Mercado Pago">Mercado Pago</option>
-            </select>
-          </div>
-          <div class="campo-grupo">
-            <label for="cliente-entrega">Modalidad de Entrega</label>
-            <select id="cliente-entrega" onchange="toggleCampoDomicilio()">
-              <option value="Retiro en Local">Retiro en Local</option>
-              <option value="Envio a Domicilio">Envio a Domicilio</option>
-            </select>
-          </div>
-          <div class="campo-grupo" id="grupo-domicilio">
-            <label for="cliente-domicilio">Domicilio y Localidad</label>
-            <input type="text" id="cliente-domicilio" placeholder="Calle, número, localidad y provincia" oninput="validarDomicilioTiempoReal()">
-            <span class="error-msg" id="error-domicilio">Completá tu domicilio y localidad para el envío.</span>
+        <div class="minimo-wrap" id="minimo-wrap">
+          <div class="minimo-texto" id="minimo-texto">Te faltan $30.000 para alcanzar el mínimo de compra</div>
+          <div class="progreso-track">
+            <div class="progreso-fill" id="progreso-fill"></div>
           </div>
         </div>
-        <button type="button" class="btn-enviar-pedido" onclick="enviarPedidoCorreo()">Enviar Pedido Ahora</button>
+        <div class="carrito-footer-row">
+          <button type="button" class="btn-vaciar" id="btn-vaciar" onclick="vaciarCarrito()" style="display:none;">Vaciar carrito</button>
+          <div style="margin-left:auto;">
+            <div class="total-texto">Total: $<span id="monto-total">0</span></div>
+            <div class="ajuste-pago-nota" id="ajuste-pago-nota" style="display:none;"></div>
+            <div class="envio-nota"><strong>*El envio es a cargo del comprador.</strong></div>
+          </div>
+        </div>
+        <div class="pagos-banner">
+          Medios de pago aceptados: <strong>Efectivo - Transferencia - Mercado Pago</strong>
+        </div>
+        <div class="checkout-form" id="bloque-checkout">
+          <h3>Completa tus datos para enviar el pedido</h3>
+          <div class="form-stack">
+            <div class="campo-grupo">
+              <label for="cliente-nombre">Nombre y Apellido *</label>
+              <input type="text" id="cliente-nombre" placeholder="Ej: Juan Pérez" oninput="validarNombreTiempoReal()">
+              <span class="error-msg" id="error-nombre">Ingresá tu nombre y apellido.</span>
+            </div>
+            <div class="campo-grupo">
+              <label for="cliente-telefono">Teléfono / WhatsApp (10 dígitos sin 0 ni 15) *</label>
+              <input type="tel" id="cliente-telefono" maxlength="10" inputmode="numeric" placeholder="Ej: 1127433172" oninput="filtrarYValidarTelefono()">
+              <span class="error-msg" id="error-telefono">El teléfono debe tener exactamente 10 números (ej: 1127433172).</span>
+            </div>
+            <div class="campo-grupo">
+              <label for="cliente-email">Correo Electrónico *</label>
+              <input type="email" id="cliente-email" placeholder="Ej: cliente@gmail.com" oninput="validarEmailTiempoReal()">
+              <span class="error-msg" id="error-email">Ingresá un correo válido (debe incluir @ y un punto, ej: nombre@gmail.com).</span>
+            </div>
+            <div class="campo-grupo">
+              <label for="cliente-pago">Medio de Pago</label>
+              <select id="cliente-pago" onchange="actualizarCarritoUI()">
+                <option value="Efectivo">Pago en Efectivo</option>
+                <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+                <option value="Mercado Pago">Mercado Pago</option>
+              </select>
+            </div>
+            <div class="campo-grupo">
+              <label for="cliente-entrega">Modalidad de Entrega</label>
+              <select id="cliente-entrega" onchange="toggleCampoDomicilio()">
+                <option value="Retiro en Local">Retiro en Local</option>
+                <option value="Envio a Domicilio">Envio a Domicilio</option>
+              </select>
+            </div>
+            <div class="campo-grupo" id="grupo-domicilio">
+              <label for="cliente-domicilio">Domicilio y Localidad</label>
+              <input type="text" id="cliente-domicilio" placeholder="Calle, número, localidad y provincia" oninput="validarDomicilioTiempoReal()">
+              <span class="error-msg" id="error-domicilio">Completá tu domicilio y localidad para el envío.</span>
+            </div>
+          </div>
+          <button type="button" class="btn-enviar-pedido" onclick="enviarPedidoCorreo()">Enviar Pedido Ahora</button>
+        </div>
       </div>
     </div>
   </aside>
@@ -348,6 +451,7 @@
     <input type="text" id="buscador-productos" placeholder="Buscar por nombre o codigo SKU...">
     <select id="filtro-categoria" onchange="filtrarDesdeSelect()">
       <option value="Todas">Todas las categorias</option>
+      <option value="Ofertas y Novedades">Ofertas y Novedades</option>
     </select>
     <select id="orden-productos" onchange="aplicarFiltros()">
       <option value="relevancia">Ordenar por: Relevancia</option>
@@ -362,6 +466,12 @@
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       </div>
       <span class="burbuja-texto">Todas</span>
+    </button>
+    <button type="button" class="burbuja-cat burbuja-ofertas" onclick="seleccionarBurbuja(this, 'Ofertas y Novedades')">
+      <div class="burbuja-icono">
+        <svg viewBox="0 0 24 24"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+      </div>
+      <span class="burbuja-texto">Ofertas / Nuevos</span>
     </button>
     <button type="button" class="burbuja-cat" onclick="seleccionarBurbuja(this, 'Utensilio Cocina')">
       <div class="burbuja-icono">
@@ -442,14 +552,15 @@
       <div class="modal-img-box" onclick="abrirImagenCompleta()">
         <img id="modal-img" src="" alt="Producto">
       </div>
-      <button type="button" class="btn-compartir" onclick="compartirProductoActual()">Compartir este producto</button>
+      <button type="button" class="btn-compartir" id="btn-compartir-modal" onclick="compartirProductoActual()">Compartir enlace directo</button>
       <div class="modal-titulo" id="modal-nombre"></div>
       <div class="modal-desc" id="modal-descripcion"></div>
+      <div class="modal-stock-info" id="modal-stock-info" style="display:none;"></div>
       <div class="modal-precio-unit" id="modal-precio"></div>
       <div class="selector-cant">
         <button type="button" onclick="cambiarCantidadModal(-1)">-</button>
         <span id="modal-cantidad">1</span>
-        <button type="button" onclick="cambiarCantidadModal(1)">+</button>
+        <button type="button" id="btn-modal-mas" onclick="cambiarCantidadModal(1)">+</button>
       </div>
       <button type="button" class="btn-agregar-modal" id="btn-agregar-modal" onclick="confirmarAgregarModal()">Agregar $0</button>
     </div>
@@ -473,6 +584,7 @@
   <script>
     const URL_EXCEL_CSV = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQ5uh38kdfXIQI99v0WvPeoVSY9uJ6LTbsrP4H-mJhnHNHVFiqcqcrnZjyfChpw6w/pub?output=csv";
     const URL_APPS_SCRIPT = "https://script.google.com/macros/s/AKfycby1ESRwWBq-t9O1QcwQB8K45t37bD0frZsKN4OTEuCEXo3zPhbomIdaG15mVkGtyZNOww/exec";
+    const WHATSAPP_TIENDA = "5491127433172";
     const IMG_PLACEHOLDER = "https://via.placeholder.com/300x300?text=Sin+Imagen";
     const MONTO_MINIMO_COMPRA = 30000;
 
@@ -490,8 +602,9 @@
     let categoriaActiva = "Todas";
     let productoModalActual = null;
     let cantidadModalActual = 1;
+    let ultimoResumenTexto = "";
 
-    // --- FUNCIONES DEL PANEL LATERAL DEL CARRITO ---
+    // --- PANEL LATERAL DEL CARRITO ---
     function abrirDrawerCarrito() {
       document.getElementById("seccion-carrito").classList.add("abierto");
       document.getElementById("carrito-backdrop").classList.add("abierto");
@@ -504,7 +617,6 @@
       document.body.style.overflow = "";
     }
 
-    // Cerrar panel con tecla Escape
     document.addEventListener("keydown", function(e) {
       if (e.key === "Escape") {
         cerrarDrawerCarrito();
@@ -533,7 +645,6 @@
     function filtrarYValidarTelefono() {
       const input = document.getElementById("cliente-telefono");
       const err = document.getElementById("error-telefono");
-      // Elimina cualquier caracter que no sea número (0-9)
       input.value = input.value.replace(/\D/g, "");
       const digitos = input.value;
       if (digitos.length !== 10) {
@@ -553,7 +664,6 @@
       const input = document.getElementById("cliente-email");
       const err = document.getElementById("error-email");
       const val = input.value.trim();
-      // Expresión regular estándar: algo@algo.dominio (al menos 2 letras al final)
       const regexEmail = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
       if (!regexEmail.test(val)) {
         input.classList.add("input-invalido");
@@ -571,11 +681,7 @@
     function toggleCampoDomicilio() {
       const entrega = document.getElementById("cliente-entrega").value;
       const grupoDom = document.getElementById("grupo-domicilio");
-      if (entrega === "Retiro en Local") {
-        grupoDom.style.display = "none";
-      } else {
-        grupoDom.style.display = "flex";
-      }
+      grupoDom.style.display = (entrega === "Retiro en Local") ? "none" : "flex";
       guardarPersistenciaCliente();
     }
 
@@ -648,7 +754,7 @@
       }
     });
 
-    // --- CATÁLOGO Y CSV ---
+    // --- CATÁLOGO, STOCK Y CSV ---
     function limpiarNumeroPrecio(texto) {
       if (!texto) return 0;
       let soloNumeros = "";
@@ -710,8 +816,16 @@
         for (let i = 1; i < filas.length; i++) {
           const cols = filas[i];
           if (cols.length < 4) continue;
-          const sinStock = (cols[8] || "").toUpperCase().trim();
-          if (sinStock === "NO" || sinStock === "SI" || sinStock === "X" || sinStock === "SIN STOCK") continue;
+          const colStockRaw = (cols[8] || "").toUpperCase().trim();
+          if (colStockRaw === "NO" || colStockRaw === "SI" || colStockRaw === "X" || colStockRaw === "SIN STOCK" || colStockRaw === "0") continue;
+
+          let stockMax = Infinity;
+          if (/^\d+$/.test(colStockRaw)) {
+            const num = parseInt(colStockRaw, 10);
+            if (num <= 0) continue;
+            stockMax = num;
+          }
+
           const nombre = cols[2] || "Producto sin nombre";
           const precioTexto = cols[3] || "$0";
           const descripcion = cols[4] || "";
@@ -719,6 +833,8 @@
           const sku = cols[6] || ("sku" + i);
           const categoria = cols[7] || "Varios";
           const precioNum = limpiarNumeroPrecio(precioTexto);
+          const promo = detectarEtiquetaPromo(nombre, descripcion);
+
           categoriasSet.add(categoria);
           todosLosProductos.push({
             id: String(i),
@@ -728,9 +844,23 @@
             descripcion: descripcion,
             imagen: imagen,
             sku: sku,
-            categoria: categoria
+            categoria: categoria,
+            stockMax: stockMax,
+            promo: promo
           });
         }
+
+        carrito.forEach(item => {
+          const prodActual = todosLosProductos.find(p => p.id === item.id || p.sku === item.sku);
+          if (prodActual) {
+            item.stockMax = prodActual.stockMax;
+            if (item.cantidad > prodActual.stockMax) {
+              item.cantidad = prodActual.stockMax;
+            }
+          }
+        });
+        actualizarCarritoUI();
+
         const selectCat = document.getElementById("filtro-categoria");
         Array.from(categoriasSet).sort().forEach(cat => {
           const opt = document.createElement("option");
@@ -739,10 +869,22 @@
           selectCat.appendChild(opt);
         });
         aplicarFiltros();
+
+        verificarEnlaceDirectoProducto();
       })
       .catch(() => {
         document.getElementById("contador-productos").textContent = "Error al cargar el catalogo. Intenta recargar la pagina.";
       });
+
+    function verificarEnlaceDirectoProducto() {
+      const params = new URLSearchParams(window.location.search);
+      const skuBuscado = params.get("sku");
+      if (!skuBuscado) return;
+      const encontrado = todosLosProductos.find(p => p.sku.toLowerCase() === skuBuscado.toLowerCase().trim());
+      if (encontrado) {
+        abrirModalProducto(encontrado);
+      }
+    }
 
     function dibujarProductos(lista) {
       const contenedor = document.getElementById("contenedor-productos");
@@ -756,13 +898,14 @@
         badge.className = "sku-tag";
         badge.textContent = prod.sku;
         card.appendChild(badge);
-        const promo = detectarEtiquetaPromo(prod.nombre, prod.descripcion);
-        if (promo) {
+
+        if (prod.promo) {
           const promoBadge = document.createElement("span");
-          promoBadge.className = "promo-tag " + promo.clase;
-          promoBadge.textContent = promo.texto;
+          promoBadge.className = "promo-tag " + prod.promo.clase;
+          promoBadge.textContent = prod.promo.texto;
           card.appendChild(promoBadge);
         }
+
         const imgBox = document.createElement("div");
         imgBox.className = "img-wrap";
         imgBox.onclick = function() { abrirModalProducto(prod); };
@@ -772,23 +915,36 @@
         img.loading = "lazy";
         img.onerror = function() { this.src = IMG_PLACEHOLDER; };
         imgBox.appendChild(img);
+
         const titulo = document.createElement("h3");
         titulo.textContent = prod.nombre;
         titulo.onclick = function() { abrirModalProducto(prod); };
+
         const desc = document.createElement("p");
         desc.className = "desc";
         desc.textContent = prod.descripcion;
+
+        card.appendChild(imgBox);
+        card.appendChild(titulo);
+        card.appendChild(desc);
+
+        if (prod.stockMax !== Infinity && prod.stockMax <= 10) {
+          const stockBadge = document.createElement("div");
+          stockBadge.className = "stock-card-badge";
+          stockBadge.textContent = prod.stockMax === 1 ? "¡Última unidad disponible!" : "Disponibles: " + prod.stockMax + " unid.";
+          card.appendChild(stockBadge);
+        }
+
         const precio = document.createElement("div");
         precio.className = "precio-card";
         precio.textContent = "$" + prod.precioNum.toLocaleString("es-AR");
+
         const btn = document.createElement("button");
         btn.type = "button";
         btn.className = "btn-elegir";
         btn.textContent = "Elegir cantidad";
         btn.onclick = function() { abrirModalProducto(prod); };
-        card.appendChild(imgBox);
-        card.appendChild(titulo);
-        card.appendChild(desc);
+
         card.appendChild(precio);
         card.appendChild(btn);
         contenedor.appendChild(card);
@@ -819,15 +975,19 @@
                               p.descripcion.toLowerCase().includes(texto) ||
                               p.sku.toLowerCase().includes(texto);
         if (!coincideTexto) return false;
+
         const catFiltro = (categoriaActiva || "").toLowerCase().trim();
         const catProd = (p.categoria || "").toLowerCase().trim();
+
         if (catFiltro === "todas" || catFiltro === "todos") return true;
+        if (catFiltro === "ofertas y novedades") return p.promo !== null;
         if (catFiltro.includes("cocina")) return catProd.includes("cocina") || catProd.includes("especiero");
         if (catFiltro.includes("hogar")) return catProd.includes("hogar") || catProd.includes("textil");
         if (catFiltro.includes("perfum")) return catProd.includes("perfum") || catProd.includes("crema");
         if (catFiltro.includes("organiz")) return catProd.includes("organiz");
         return catProd === catFiltro || catProd.includes(catFiltro);
       });
+
       if (orden === "menor") {
         filtrados.sort((a, b) => a.precioNum - b.precioNum);
       } else if (orden === "mayor") {
@@ -838,20 +998,53 @@
 
     document.getElementById("buscador-productos").addEventListener("input", aplicarFiltros);
 
-    // --- MODAL DE PRODUCTO ---
+    // --- MODAL DE PRODUCTO Y CONTROL DE STOCK ---
+    function obtenerStockRestanteParaModal(prod) {
+      if (!prod || prod.stockMax === Infinity) return Infinity;
+      const enCarrito = carrito.find(item => item.id === prod.id);
+      const yaAgregados = enCarrito ? enCarrito.cantidad : 0;
+      return Math.max(0, prod.stockMax - yaAgregados);
+    }
+
     function abrirModalProducto(prod) {
       productoModalActual = prod;
-      cantidadModalActual = 1;
+      const restante = obtenerStockRestanteParaModal(prod);
+      cantidadModalActual = restante > 0 ? 1 : 0;
+
       document.getElementById("modal-img").src = prod.imagen;
       document.getElementById("modal-nombre").textContent = prod.nombre;
       document.getElementById("modal-descripcion").textContent = prod.descripcion;
       document.getElementById("modal-precio").textContent = "$" + prod.precioNum.toLocaleString("es-AR");
+
+      const stockInfo = document.getElementById("modal-stock-info");
+      if (prod.stockMax !== Infinity) {
+        stockInfo.style.display = "block";
+        if (restante === 0) {
+          stockInfo.textContent = "Ya tenés el máximo disponible (" + prod.stockMax + " unid.) en tu carrito.";
+        } else {
+          stockInfo.textContent = "Stock disponible: " + restante + " unidades";
+        }
+      } else {
+        stockInfo.style.display = "none";
+      }
+
+      try {
+        const urlObj = new URL(window.location.href);
+        urlObj.searchParams.set("sku", prod.sku);
+        window.history.replaceState({}, "", urlObj.toString());
+      } catch (e) {}
+
       actualizarBotonModal();
       document.getElementById("modal-producto").classList.add("abierto");
     }
 
     function cerrarModal() {
       document.getElementById("modal-producto").classList.remove("abierto");
+      try {
+        const urlObj = new URL(window.location.href);
+        urlObj.searchParams.delete("sku");
+        window.history.replaceState({}, "", urlObj.toString());
+      } catch (e) {}
     }
 
     function cerrarModalFondo(e) {
@@ -865,50 +1058,89 @@
     }
 
     function cambiarCantidadModal(delta) {
+      if (!productoModalActual) return;
+      const restante = obtenerStockRestanteParaModal(productoModalActual);
+      if (restante === 0) return;
+
       cantidadModalActual += delta;
       if (cantidadModalActual < 1) cantidadModalActual = 1;
+      if (cantidadModalActual > restante) cantidadModalActual = restante;
       actualizarBotonModal();
     }
 
     function actualizarBotonModal() {
+      const restante = obtenerStockRestanteParaModal(productoModalActual);
+      const btnMas = document.getElementById("btn-modal-mas");
+      const btnAgregar = document.getElementById("btn-agregar-modal");
+
       document.getElementById("modal-cantidad").textContent = cantidadModalActual;
-      const subtotal = productoModalActual.precioNum * cantidadModalActual;
-      document.getElementById("btn-agregar-modal").textContent = "Agregar $" + subtotal.toLocaleString("es-AR");
+      btnMas.disabled = (cantidadModalActual >= restante);
+
+      if (restante === 0) {
+        btnAgregar.disabled = true;
+        btnAgregar.textContent = "Stock máximo alcanzado";
+      } else {
+        btnAgregar.disabled = false;
+        const subtotal = productoModalActual.precioNum * cantidadModalActual;
+        btnAgregar.textContent = "Agregar $" + subtotal.toLocaleString("es-AR");
+      }
     }
 
     function confirmarAgregarModal() {
-      if (!productoModalActual) return;
+      if (!productoModalActual || cantidadModalActual <= 0) return;
+      const restante = obtenerStockRestanteParaModal(productoModalActual);
+      const cantFinal = Math.min(cantidadModalActual, restante);
+      if (cantFinal <= 0) return;
+
       const existente = carrito.find(item => item.id === productoModalActual.id);
       if (existente) {
-        existente.cantidad += cantidadModalActual;
+        existente.cantidad += cantFinal;
+        existente.stockMax = productoModalActual.stockMax;
       } else {
         carrito.push({
           id: productoModalActual.id,
           sku: productoModalActual.sku,
           nombre: productoModalActual.nombre,
           precio: productoModalActual.precioNum,
-          cantidad: cantidadModalActual
+          cantidad: cantFinal,
+          stockMax: productoModalActual.stockMax
         });
       }
+      cerrarComprobanteYSeguir(false);
       actualizarCarritoUI();
       cerrarModal();
     }
 
     function compartirProductoActual() {
       if (!productoModalActual) return;
-      const texto = "Mira este producto de Calejo Bazar: " + productoModalActual.nombre + " - $" + productoModalActual.precioNum.toLocaleString("es-AR");
+      const urlObj = new URL(window.location.origin + window.location.pathname);
+      urlObj.searchParams.set("sku", productoModalActual.sku);
+      const linkDirecto = urlObj.toString();
+      const texto = "Mirá este producto de Calejo Bazar: " + productoModalActual.nombre + " - $" + productoModalActual.precioNum.toLocaleString("es-AR");
+
       if (navigator.share) {
-        navigator.share({ title: productoModalActual.nombre, text: texto, url: window.location.href });
+        navigator.share({ title: productoModalActual.nombre, text: texto, url: linkDirecto });
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(linkDirecto).then(() => {
+          const btn = document.getElementById("btn-compartir-modal");
+          const orig = btn.textContent;
+          btn.textContent = "¡Enlace directo copiado!";
+          setTimeout(() => { btn.textContent = orig; }, 2200);
+        });
       } else {
-        window.open("https://wa.me/?text=" + encodeURIComponent(texto + " " + window.location.href), "_blank");
+        window.open("https://wa.me/?text=" + encodeURIComponent(texto + " " + linkDirecto), "_blank");
       }
     }
 
-    // --- CARRITO DE COMPRAS ---
+    // --- CARRITO DE COMPRAS Y COMPROBANTE ---
     function modificarItemCarrito(id, delta) {
       const idx = carrito.findIndex(i => i.id === id);
       if (idx === -1) return;
-      carrito[idx].cantidad += delta;
+      const maxPermitido = carrito[idx].stockMax || Infinity;
+      const nuevaCant = carrito[idx].cantidad + delta;
+
+      if (nuevaCant > maxPermitido) return;
+      carrito[idx].cantidad = nuevaCant;
       if (carrito[idx].cantidad <= 0) carrito.splice(idx, 1);
       actualizarCarritoUI();
     }
@@ -967,13 +1199,24 @@
         const sub = item.precio * item.cantidad;
         subtotalBase += sub;
         totalUnidades += item.cantidad;
+        const maxPermitido = item.stockMax || Infinity;
 
         const row = document.createElement("div");
         row.className = "item-carrito";
 
+        const infoWrap = document.createElement("div");
+        infoWrap.className = "item-info-wrap";
+
         const info = document.createElement("span");
-        info.style.flex = "1";
         info.textContent = item.nombre + " ($" + item.precio.toLocaleString("es-AR") + " c/u)";
+        infoWrap.appendChild(info);
+
+        if (maxPermitido !== Infinity && item.cantidad >= maxPermitido) {
+          const avisoMax = document.createElement("span");
+          avisoMax.className = "item-stock-aviso";
+          avisoMax.textContent = "Máximo en stock alcanzado (" + maxPermitido + ")";
+          infoWrap.appendChild(avisoMax);
+        }
 
         const controles = document.createElement("div");
         controles.className = "item-controles";
@@ -991,6 +1234,7 @@
         btnMas.type = "button";
         btnMas.className = "btn-mini";
         btnMas.textContent = "+";
+        btnMas.disabled = (item.cantidad >= maxPermitido);
         btnMas.onclick = function() { modificarItemCarrito(item.id, 1); };
 
         const subTxt = document.createElement("strong");
@@ -1003,7 +1247,7 @@
         controles.appendChild(btnMas);
         controles.appendChild(subTxt);
 
-        row.appendChild(info);
+        row.appendChild(infoWrap);
         row.appendChild(controles);
         lista.appendChild(row);
       });
@@ -1037,6 +1281,46 @@
       actualizarBarraMinimo(subtotalBase);
     }
 
+  function mostrarComprobantePedido(nroPedido, datosPedido) {
+  const textoResumen =
+    "Hola Calejo Bazar! Acabo de realizar un pedido:\n" +
+    "*Pedido:* " + nroPedido + "\n" +
+    "*Cliente:* " + datosPedido.cliente + "\n" +
+    "*Teléfono:* " + datosPedido.telefono + "\n" +
+    "*Pago:* " + datosPedido.pago + "\n" +
+    "*Entrega:* " + datosPedido.entrega +
+    (datosPedido.entrega !== "Retiro en Local" ? " (" + datosPedido.domicilio + ")" : "") + "\n" +
+    "*Detalle:*\n" + datosPedido.detalle + "\n" +
+    "*Total:* " + datosPedido.total;
+
+  ultimoResumenTexto = textoResumen;
+  document.getElementById("comp-nro").textContent = "Orden: " + nroPedido;
+  document.getElementById("comp-texto").textContent = textoResumen.replace(/\*/g, "");
+  document.getElementById("btn-wsp-comprobante").href = "https://wa.me" + WHATSAPP_TIENDA + "?text=" + encodeURIComponent(textoResumen);
+  document.getElementById("vista-carrito-normal").style.display = "none";
+  document.getElementById("bloque-comprobante").style.display = "block";
+  abrirDrawerCarrito();
+}
+
+
+    function copiarResumenPedido() {
+      if (!ultimoResumenTexto) return;
+      const textoLimpio = ultimoResumenTexto.replace(/\*/g, "");
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(textoLimpio).then(() => {
+          const btn = document.getElementById("btn-copiar-comprobante");
+          btn.textContent = "¡Resumen copiado al portapapeles!";
+          setTimeout(() => { btn.textContent = "Copiar resumen del pedido"; }, 2500);
+        });
+      }
+    }
+
+    function cerrarComprobanteYSeguir(cerrarPanel = true) {
+      document.getElementById("bloque-comprobante").style.display = "none";
+      document.getElementById("vista-carrito-normal").style.display = "block";
+      if (cerrarPanel) cerrarDrawerCarrito();
+    }
+
     function enviarPedidoCorreo() {
       if (carrito.length === 0) return;
 
@@ -1047,7 +1331,6 @@
         return;
       }
 
-      // Ejecutar todas las validaciones antes de enviar
       const nombreOk = validarNombreTiempoReal();
       const telOk = filtrarYValidarTelefono();
       const emailOk = validarEmailTiempoReal();
@@ -1071,13 +1354,24 @@
       carrito.forEach(item => {
         const sub = item.precio * item.cantidad;
         const skuTxt = item.sku ? "[" + item.sku + "] " : "";
-        detalle += "- " + skuTxt + item.nombre + " x" + item.cantidad + " = $" + sub.toLocaleString("es-AR") + "\n";
+        detalle += "- " + skuTxt + item.nombre + " x" + item.cantidad + " = $" + sub.toLocaleString("es-AR") + "";
       });
 
       const pctAjuste = CONFIG_PAGOS[pago] || 0;
       const montoAjuste = Math.round(subtotalBase * (pctAjuste / 100));
       const totalFinal = subtotalBase + montoAjuste;
       const totalTexto = "$" + totalFinal.toLocaleString("es-AR");
+
+      const datosPedido = {
+        cliente: cliente,
+        telefono: telefono,
+        email: email,
+        pago: pago,
+        entrega: entrega,
+        domicilio: domicilio,
+        detalle: detalle.trim(),
+        total: totalTexto
+      };
 
       const btnEnviar = document.querySelector(".btn-enviar-pedido");
       if (btnEnviar) {
@@ -1087,33 +1381,22 @@
 
       fetch(URL_APPS_SCRIPT, {
         method: "POST",
-        body: JSON.stringify({
-          cliente: cliente,
-          telefono: telefono,
-          email: email,
-          pago: pago,
-          entrega: entrega,
-          domicilio: domicilio,
-          detalle: detalle,
-          total: totalTexto
-        })
+        body: JSON.stringify(datosPedido)
       })
       .then(res => res.json())
       .then(data => {
         if (data.ok) {
-          alert("¡Pedido " + data.nro + " enviado con éxito! Nos pondremos en contacto a la brevedad.");
           carrito = [];
           actualizarCarritoUI();
-          cerrarDrawerCarrito();
+          mostrarComprobantePedido(data.nro || "Confirmado", datosPedido);
         } else {
           alert("Hubo un problema al registrar el pedido. Por favor intentá nuevamente.");
         }
       })
       .catch(() => {
-        alert("¡Pedido enviado! Si no recibís confirmación, escribinos por WhatsApp.");
         carrito = [];
         actualizarCarritoUI();
-        cerrarDrawerCarrito();
+        mostrarComprobantePedido("Enviado", datosPedido);
       })
       .finally(() => {
         if (btnEnviar) {
