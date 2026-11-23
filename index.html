@@ -1281,26 +1281,42 @@
       actualizarBarraMinimo(subtotalBase);
     }
 
-  function mostrarComprobantePedido(nroPedido, datosPedido) {
-  const textoResumen =
-    "Hola Calejo Bazar! Acabo de realizar un pedido:\n" +
-    "*Pedido:* " + nroPedido + "\n" +
-    "*Cliente:* " + datosPedido.cliente + "\n" +
-    "*Teléfono:* " + datosPedido.telefono + "\n" +
-    "*Pago:* " + datosPedido.pago + "\n" +
-    "*Entrega:* " + datosPedido.entrega +
-    (datosPedido.entrega !== "Retiro en Local" ? " (" + datosPedido.domicilio + ")" : "") + "\n" +
-    "*Detalle:*\n" + datosPedido.detalle + "\n" +
-    "*Total:* " + datosPedido.total;
+ function abrirWhatsAppComprobante(e) {
+      if (e) e.preventDefault();
+      if (!ultimoResumenTexto) return;
+      const urlWsp = "https://api.whatsapp.com/send?phone=" + WHATSAPP_TIENDA + "&text=" + encodeURIComponent(ultimoResumenTexto);
+      window.open(urlWsp, "_blank", "noopener,noreferrer");
+    }
 
-  ultimoResumenTexto = textoResumen;
-  document.getElementById("comp-nro").textContent = "Orden: " + nroPedido;
-  document.getElementById("comp-texto").textContent = textoResumen.replace(/\*/g, "");
-  document.getElementById("btn-wsp-comprobante").href = "https://wa.me" + WHATSAPP_TIENDA + "?text=" + encodeURIComponent(textoResumen);
-  document.getElementById("vista-carrito-normal").style.display = "none";
-  document.getElementById("bloque-comprobante").style.display = "block";
-  abrirDrawerCarrito();
-}
+    function mostrarComprobantePedido(nroPedido, datosPedido) {
+      const lineas = [
+        "Hola Calejo Bazar! Acabo de realizar un pedido:",
+        "",
+        "*Pedido:* " + nroPedido,
+        "*Cliente:* " + datosPedido.cliente,
+        "*Telefono:* " + datosPedido.telefono,
+        "*Pago:* " + datosPedido.pago,
+        "*Entrega:* " + datosPedido.entrega + (datosPedido.entrega !== "Retiro en Local" ? " (" + datosPedido.domicilio + ")" : ""),
+        "",
+        "*Detalle:*",
+        datosPedido.detalle,
+        "",
+        "*Total:* " + datosPedido.total
+      ];
+      const textoResumen = lineas.join("\n");
+
+      ultimoResumenTexto = textoResumen;
+
+      document.getElementById("comp-nro").textContent = "Orden: " + nroPedido;
+      document.getElementById("comp-texto").textContent = textoResumen.replace(/\*/g, "");
+      const btnWsp = document.getElementById("btn-wsp-comprobante");
+      btnWsp.href = "https://api.whatsapp.com/send?phone=" + WHATSAPP_TIENDA + "&text=" + encodeURIComponent(textoResumen);
+      btnWsp.onclick = abrirWhatsAppComprobante;
+
+      document.getElementById("vista-carrito-normal").style.display = "none";
+      document.getElementById("bloque-comprobante").style.display = "block";
+      abrirDrawerCarrito();
+    }
 
 
     function copiarResumenPedido() {
