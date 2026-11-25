@@ -330,12 +330,56 @@
     .btn-subir-float { display: none; position: fixed; bottom: 68px; right: 16px; width: 42px; height: 42px; border-radius: 50%; background: #ff6b00; color: #fff; border: none; font-size: 18px; font-weight: 800; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 12px rgba(255,107,0,0.35); z-index: 910; }
     .btn-subir-float:hover { background: #e65100; }
     footer { text-align: center; padding: 28px 15px 15px; font-size: 12px; color: #777; margin-top: 25px; border-top: 1px solid #eee; }
+ .banner-bienvenida-destacado {
+    background: linear-gradient(90deg, #1a1a1a 0%, #333333 100%);
+    color: #ffffff;
+    text-align: center;
+    padding: 16px 20px;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: 3px solid #f59e0b;
+    position: relative;
+    z-index: 999;
+    font-family: sans-serif;
+  }
+
+  .banner-bienvenida-destacado p {
+    margin: 5px 0;
+  }
+
+  .banner-titulo {
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #fbbf24;
+  }
+
+  .banner-info {
+    font-size: 1.05rem;
+    font-weight: 500;
+  }
+
+  .banner-requisitos {
+    font-size: 1.05rem;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.12);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-top: 6px !important;
+  }
+
+  @media (max-width: 600px) {
+    .banner-titulo { font-size: 1.15rem; }
+    .banner-info, .banner-requisitos { font-size: 0.9rem; }
+  }
   </style>
 </head>
 <body>
-  <div class="top-banner" id="top-banner-minimo">
-    BIENVENIDOS A CALEJO BAZAR - Requisitos de compra: Mínimo 3 artículos y un monto total igual o superior a $30.000.
-- Envíos a todo el país (a cargo del comprador)
+  <div class="banner-bienvenida-destacado">
+    <p class="banner-titulo">✨ BIENVENIDOS A CALEJO BAZAR ✨</p>
+    <p class="banner-info">📦 Venta mayorista y por menor | Envíos a todo el país (a cargo del comprador).</p>
+    <p class="banner-requisitos">🛒 Requisitos de compra: Mínimo 3 artículos y un monto total igual o superior a $30.000.</p>
   </div>
 
   <!-- Botón flotante de carrito arriba a la derecha -->
@@ -347,6 +391,7 @@
 
   <header>
     <div class="logo-wrap">
+
       <span class="logo-badge">CB</span>
       <h1>Calejo Bazar</h1>
     </div>
